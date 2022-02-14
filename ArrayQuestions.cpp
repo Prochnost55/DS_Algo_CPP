@@ -3,37 +3,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// general functions
-void printArray(int arr[], int len){
-    for (int i = 0; i < len; i++)
-    {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-};
-
-void printVector(vector<int> &arr){
-    for (int i = 0; i < arr.size(); i++)
-    {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-};
-
-void print2DVector(vector<vector<int>> &vect){
-  for (int i = 0; i < vect.size(); i++) {
-        for (int j = 0; j < vect[i].size(); j++)
-            cout << vect[i][j] << " ";
-        cout << endl;
-    }
-}
-
-bool sortcol(const vector<int>& v1, const vector<int>& v2, int colIndex)
-{
-    return v1[colIndex] < v2[colIndex];
-}
-
-
 // Q1 - swap alternate elements in an array
 void swapNext(int arr[], int len){
     int isOdd = len & 1;
@@ -120,6 +89,91 @@ vector<vector<int>> pairSum(vector<int> &arr, int s){
   return ans;
 }
 
+//Q6 - Sort 01 
+void sort01(int *arr, int n){
+   int i = 0;
+   int j = n-1;
+
+   while(i<j){
+       if(arr[i] == 0){
+           i++;
+       }
+       if(arr[j] == 1){
+           j--;
+       }
+       if(arr[i]==1 && arr[j]== 0){
+           swap(arr[i], arr[j]);
+           i++; j--;
+       }
+   }
+}
+
+
+// Q7 - sort 0 1 2
+// https://www.codingninjas.com/codestudio/problems/sort-0-1-2_631055
+void sort012(int *arr, int n){
+   int i = 0;
+   int j = n-1;
+    // {0, 1, 2, 1, 2, 1, 2};
+    while(i<j){
+        if(arr[i] == 0 || (arr[i] == 1 && arr[i+1] == 1)){
+            i++;
+            printArray(arr, n);
+            cout << "step 1 ------" << i << " " << j << endl;
+            cout << endl;
+        }
+        if(arr[j] == 2 || (arr[j] == 1 && arr[j-1] == 1)){
+            j--;
+            printArray(arr, n);
+            cout << "step 2 ------" << i << " " << j << endl;
+            cout << endl;
+        }
+        if(arr[i] == 2 && (arr[j] == 0 || arr[j] == 1)){
+            swap(arr[i], arr[j]);
+            i++; j--;
+            printArray(arr, n);
+            cout << "step 3 ------" << i << " " << j << endl;
+            cout << endl;
+        }
+        if(arr[i] == 1 && arr[i+1] != 1 && j > i){
+            swap(arr[i], arr[i+1]);
+            printArray(arr, n);
+            cout << "step 4 ------" << i << " " << j << endl;
+            cout << endl;
+        }
+        if(arr[j] == 1 && arr[j-1] != 1){
+            swap(arr[j], arr[j-1]);
+            printArray(arr, n);
+            cout << "step 5 ------" << i << " " << j << endl;
+            cout << endl;
+        }
+        
+    }
+//    while(i<j){
+//        if(arr[i] == 0){
+//            i++;
+//        }
+//        if(arr[j] == 2){
+//            j--;
+//        }
+//        if(arr[i] == 1 && arr[i+1] != 1){
+//            swap(arr[i+1], arr[i]);
+//        }
+//        if(arr[j] == 1 && arr[j-1] != 1){
+//            swap(arr[j], arr[j-1]);
+//        }
+
+//        if(arr[i]==2 && arr[j]!= 2){
+//            swap(arr[i], arr[j]);
+//            i++;
+//        }
+//        if(arr[j]==0 && arr[i]!= 0){
+//            swap(arr[i], arr[j]);
+//            j--;
+//        }
+//    }
+}
+
 // main function;
 int main(){
     // // for Q1
@@ -158,4 +212,17 @@ int main(){
 
     // print2DVector(ans1);
     // print2DVector(ans2);
+
+    // // for Q6
+    // int arr[9] = {1,1,0,1};
+    // sort01(arr, 9);
+    // printArray(arr, 9);
+
+    // for Q7
+    int arr[7] = {0, 1, 2, 1, 2, 1, 2};
+    int arr2[6] = {0, 1, 2, 2, 1, 0};
+    // sort012(arr, 7);
+    sort012(arr2, 6);
+    printArray(arr2, 6);
+    printArray(arr, 7);
 }
