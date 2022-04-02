@@ -1,8 +1,13 @@
-#include "procho.h"
 #include <iostream>
+#include <vector>
 using namespace std;
-
-// general functions
+void printVector(vector<int> &arr){
+    for (int i = 0; i < arr.size(); i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+};
 void printArray(int arr[], int len){
     for (int i = 0; i < len; i++)
     {
@@ -11,50 +16,61 @@ void printArray(int arr[], int len){
     cout << endl;
 };
 
-void printVector(vector<int> &arr){
-    for (int i = 0; i < arr.size(); i++)
-    {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-};
 
-void print2DVector(vector<vector<int>> &vect){
-  for (int i = 0; i < vect.size(); i++) {
-        for (int j = 0; j < vect[i].size(); j++)
-            cout << vect[i][j] << " ";
-        cout << endl;
+void merge(vector<int>& arr, int s, int e){
+    int m = s+(e-s)/2;
+    int len1 = m-s+1;
+    int len2 = e-m;
+    
+    int *arr1 = new int[len1];
+    int *arr2 = new int[len2];
+
+    int arrIndex = s;
+    for(int i = 0; i < len1; i++){
+        arr1[i] = arr[arrIndex++];
+    }
+
+    arrIndex = m+1;
+    for(int i = 0; i < len2; i++){
+        arr2[i] = arr[arrIndex++];
+    }
+
+    
+    int arr1Index = 0;
+    int arr2Index = 0;
+    arrIndex = s;
+    
+    while(arr1Index < len1 && arr2Index < len2){
+        if(arr1[arr1Index] < arr2[arr2Index]){
+            arr[arrIndex++] = arr1[arr1Index++];
+        }else{
+            arr[arrIndex++] = arr2[arr2Index++];
+        }
+    }
+
+    while(arr1Index < len1){
+        arr[arrIndex++] = arr1[arr1Index++];
+    }
+    while(arr2Index < len2){
+        arr[arrIndex++] = arr2[arr2Index++];
     }
 }
 
-bool sortcol(const vector<int>& v1, const vector<int>& v2, int colIndex)
-{
-    return v1[colIndex] < v2[colIndex];
-}
-
-int binarySearch(int arr[], int len,int key){
-  int m = 0;
-  int s = 0;
-  int e = len - 1;
-  while(s<=e){
-      m = e - (e-s)/2;
-      if(arr[m] == key){
-        return m;
-      };
-      
-      if(arr[m] > key){
-        e = m-1;
-      }else{
-        s = m+1;
-      }
+void mergeSort(vector<int>& arr, int s, int e, string side) {
+    
+    if(s >= e){
+        return;
     }
-  return -1;
+    
+    int m = s + (e-s)/2;
+    
+    mergeSort(arr, s, m, " left");
+    mergeSort(arr, m+1, e, " right");
+    merge(arr, s, e);
 }
 
-
-int main() {
-    int arr[10] = {1,4,6,8,12,14,18,20,25,28};
-    // cout << binarySearch(arr, 10, 14) << endl;
-    printArray(arr, 10);
-    cout << "asdf";
+int main(){
+    vector<int> arr {4,1,6,2,3,5};
+    mergeSort(arr, 0, arr.size()-1, " start");
+    printVector(arr);   
 }
