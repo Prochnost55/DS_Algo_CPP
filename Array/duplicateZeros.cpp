@@ -18,23 +18,19 @@ void printArray(int arr[], int len){
     cout << endl;
 };
 
-int removeDuplicates(vector<int>& nums) {
-    int j = 0;
-    int count = 1;
-    for(int i=1; i<nums.size() ; i++){
-        if(nums[i] == nums[i-1]){
-            j++;
-        }else{
-            nums[i-j] = nums[i];
-            count++;
+void duplicateZeros(vector<int>& arr) {
+    int len = arr.size();
+    for(int i = 0; i<len; i++){
+        if(arr[i] == 0){
+            arr.insert(arr.begin()+(++i),0);
         }
     }
-    return count;
+    arr.erase(arr.begin()+len, arr.end());
+    
 }
 
 int main(){    
-    vector<int> nums1 {0,0,1,1,1,2,2,3,3,4};
-    // 0 1 3 0 4 2 2 2
-    cout << removeDuplicates(nums1) << endl;
+    vector<int> nums1 {1,0,2};
+    duplicateZeros(nums1);
     printVector(nums1);
 }
