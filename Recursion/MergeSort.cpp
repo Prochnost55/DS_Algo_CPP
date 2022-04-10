@@ -56,7 +56,7 @@ void merge(vector<int>& arr, int s, int e){
     }
 }
 
-void mergeSort(vector<int>& arr, int s, int e, string side) {
+void mergeSort(vector<int>& arr, int s, int e) {
     
     if(s >= e){
         return;
@@ -64,13 +64,13 @@ void mergeSort(vector<int>& arr, int s, int e, string side) {
     
     int m = s + (e-s)/2;
     
-    mergeSort(arr, s, m, " left");
-    mergeSort(arr, m+1, e, " right");
+    mergeSort(arr, s, m);
+    mergeSort(arr, m+1, e);
     merge(arr, s, e);
 }
 
 int main(){
     vector<int> arr {4,1,6,2,3,5};
-    mergeSort(arr, 0, arr.size()-1, " start");
+    mergeSort(arr, 0, arr.size()-1);
     printVector(arr);   
 }
